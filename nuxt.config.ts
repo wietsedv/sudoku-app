@@ -4,6 +4,6 @@ export default defineNuxtConfig({
   // devtools: { enabled: true },
   modules: ["@nuxtjs/tailwindcss"],
   routeRules: {
-    "/": { redirect: "/sudoku" },
+    "/": { redirect: "/sudoku/000000000000000000000000000000000000000000000000000000000000000000000000000000000" },
   },
 });
