@@ -8,11 +8,19 @@ const empty = computed(() => givens.value.every((el) => el === 0));
 
 const { digits, centerMarks, cornerMarks } = usePersistentState(givens);
 
-const history = ref<ActionHistory>([]);
+const previousActions = ref<ActionList>([]);
+const nextActions = ref<ActionList>([]);
 
-watch(givens, () => (history.value = [[]]), { immediate: true });
+watch(
+  givens,
+  () => {
+    previousActions.value = [[]];
+    nextActions.value = [];
+  },
+  { immediate: true }
+);
 
-const { keyDown } = useKeyboardInput(givens, digits, centerMarks, cornerMarks, selection, history);
+const { keyDown } = useKeyboardInput(givens, digits, centerMarks, cornerMarks, selection, previousActions, nextActions);
 </script>
 
 <template>

@@ -4,19 +4,21 @@ export const useKeyboardInput = (
   centerMarks: Ref<Set<number>[]>,
   cornerMarks: Ref<Set<number>[]>,
   selection: Ref<Set<number>>,
-  history: Ref<ActionHistory>
+  previousActions: Ref<ActionList>,
+  nextActions: Ref<ActionList>
 ) => {
-  const { addDigit, clearDigits } = useUpdateDigits(digits, givens, selection, history);
+  const { addDigit, clearDigits } = useUpdateDigits(digits, givens, selection, previousActions, nextActions);
   const {
     addMark: addCenterMark,
     clearMarks: clearCenterMarks,
     clearAllMarks: clearAllCenterMarks,
-  } = useUpdateMarks(centerMarks, digits, selection, history, ActionType.CenterMark);
+  } = useUpdateMarks(centerMarks, digits, selection, previousActions, nextActions, ActionType.CenterMark);
   const {
     addMark: addCornerMark,
     clearMarks: clearCornerMarks,
     clearAllMarks: clearAllCornerMarks,
-  } = useUpdateMarks(cornerMarks, digits, selection, history, ActionType.CornerMark);
+  } = useUpdateMarks(cornerMarks, digits, selection, previousActions, nextActions, ActionType.CornerMark);
+  const { undoAction, redoAction } = useUndoRedo(digits, centerMarks, cornerMarks, previousActions, nextActions);
 
   function keyDown(event: KeyboardEvent) {
     if (selection.value.size === 0) {
@@ -74,7 +76,11 @@ export const useKeyboardInput = (
           if (!clearDigits()) if (!clearAllCornerMarks()) clearAllCenterMarks();
         }
         break;
-      default:
+      case "BracketLeft":
+        undoAction();
+        break;
+      case "BracketRight":
+        redoAction();
         break;
     }
   }

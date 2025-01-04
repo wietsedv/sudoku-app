@@ -2,10 +2,11 @@ export const useUpdateMarks = (
   marks: Ref<Set<number>[]>,
   digits: Ref<number[]>,
   selection: Ref<Set<number>>,
-  history: Ref<ActionHistory>,
+  previousActions: Ref<ActionList>,
+  nextActions: Ref<ActionList>,
   actionType: ActionType
 ) => {
-  const { updateHistory, recordAction } = useUpdateHistory(history);
+  const { updateHistory, recordAction } = useUpdateHistory(previousActions, nextActions);
 
   function addMark(digit: number) {
     let added = false;

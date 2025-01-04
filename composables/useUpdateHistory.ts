@@ -7,21 +7,22 @@ export enum ActionType {
 interface CellAction {
   index: number;
   type: ActionType;
-  before: number | number[];
-  after: number | number[];
+  before: number[];
+  after: number[];
 }
 
-export type ActionHistory = CellAction[][];
+export type ActionList = CellAction[][];
 
-export const useUpdateHistory = (history: Ref<ActionHistory>) => {
+export const useUpdateHistory = (previousActions: Ref<ActionList>, nextActions: Ref<ActionList>) => {
   function updateHistory() {
-    if (history.value.at(-1)?.length) {
-      history.value.push([]);
+    if (previousActions.value.at(-1)?.length) {
+      previousActions.value.push([]);
+      nextActions.value = [];
     }
   }
 
-  function recordAction(index: number, type: ActionType, before: number | number[], after: number | number[]) {
-    history.value.at(-1)?.push({ index, type, before, after });
+  function recordAction(index: number, type: ActionType, before: number[], after: number[]) {
+    previousActions.value.at(-1)?.push({ index, type, before, after });
   }
 
   return { updateHistory, recordAction };
