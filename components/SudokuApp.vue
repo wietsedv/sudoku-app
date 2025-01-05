@@ -32,6 +32,6 @@ const { keyDown } = useKeyboardInput(givens, digits, centerMarks, cornerMarks, s
       <SudokuCenterMarks :marks="centerMarks" :digits />
       <SudokuDigits :digits :givens />
     </SudokuBoard>
-    <slot />
+    <SudokuTimer />
   </div>
 </template>
