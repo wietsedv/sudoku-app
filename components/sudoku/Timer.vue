@@ -7,5 +7,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="text-right font-mono">{{ Math.floor(time / 60) }}:{{ (time % 60).toString().padStart(2, "0") }}</div>
+  <div class="font-mono">{{ Math.floor(time / 60) }}:{{ (time % 60).toString().padStart(2, "0") }}</div>
 </template>

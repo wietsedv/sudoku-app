@@ -32,6 +32,10 @@ const { keyDown } = useKeyboardInput(givens, digits, centerMarks, cornerMarks, s
       <SudokuCenterMarks :marks="centerMarks" :digits />
       <SudokuDigits :digits :givens />
     </SudokuBoard>
-    <SudokuTimer />
+
+    <div class="flex justify-between">
+      <a :href="'https://www.sudokuwiki.org/sudoku.htm?bd=' + digits.join('')" target="_blank">SudokuWiki Solver</a>
+      <SudokuTimer class="right" />
+    </div>
   </div>
 </template>
